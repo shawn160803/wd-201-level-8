@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 'use strict';
 const {
-  Model, Op
+  Model,
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate() {
+      // define association here
     }
 
     static addTodo({title, dueDate}) {
@@ -20,32 +21,6 @@ module.exports = (sequelize, DataTypes) => {
     static getTodos(){
       return this.findAll();
     }
-
-    static async overdue() {
-      return await Todo.findAll({
-        where: {
-          dueDate: { [Op.lt]: new Date().toLocaleDateString("en-CA") },
-        },
-      });
-    }
-
-    static async dueToday() {
-      return await Todo.findAll({
-        where: {
-          dueDate: { [Op.eq]: new Date().toLocaleDateString("en-CA") },
-        },
-      });
-    }
-
-    static async dueLater() {
-      return await Todo.findAll({
-        where: {
-          dueDate: { [Op.gt]: new Date().toLocaleDateString("en-CA") },
-        },
-      });
-    }
-
-
 
     markAsCompleted() {
       return this.update({completed: true});
