@@ -78,4 +78,28 @@ describe('todo test suits', ()=>{
     const boolResponse = Boolean(changeTodo.text);
     expect(boolResponse).toBe(true);
   });
+
+  test('Test the marking an item as incomplete', async () => {
+    const getResponse = await agent.get('/');
+    let csrfToken = fetchCsrfToken(getResponse);
+    await agent.post('/todos').send({
+      title: 'some changes of L9-1-1',
+      dueDate: new Date().toISOString(),
+      completed: true,
+      '_csrf': csrfToken,
+    });
+    const TodosItems = await agent.get('/').set('Accept', 'application/json');
+    const TodosItemsParse = JSON.parse(TodosItems.text);
+    const calculateTodosTodayITem = TodosItemsParse.dueToday.length;
+    const Todo = TodosItemsParse.dueToday[calculateTodosTodayITem - 1];
+    const boolStatus = !Todo.completed;
+    anotherRes = await agent.get('/');
+    csrfToken = fetchCsrfToken(anotherRes);
+
+    const changeTodo = await agent.put(`/todos/${Todo.id}`)
+    .send({_csrf: csrfToken, completed: boolStatus});
+
+    const UpadteTodoItemParse = JSON.parse(changeTodo.text);
+    expect(UpadteTodoItemParse.completed).toBe(boolStatus);
+  });
 });
