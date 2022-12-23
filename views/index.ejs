@@ -24,7 +24,6 @@
                     "_csrf":token,
                     completed: currentStatus
                 })
-
             })
             .then((res) =>
             {
@@ -32,7 +31,6 @@
             })
             .catch((err) => console.error(err));
         }
-
         function deleteTodo(id)
         {
             fetch(`/todos/${id}`,{
@@ -59,7 +57,7 @@
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                 <div class="flex gap-2 py-4">
                     <div class="flex-auto">
-                        <input type="text" name="itle" placeholder="type nText?" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required />
+                        <input type="text" name="title" placeholder="whats next?" class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required />
                     </div>
                 
                     <div class="flex-auto">
@@ -70,10 +68,7 @@
                     <div class="flex-none">
                         <button type="submit" class="bg-green-500 text-white px-5 py-2 rounded font-medium mr-2 py1.5">Add</button>
                     </div>
-                </div>
-                
-               
-                
+                </div>       
             </form>
            
             <%- include("todos.ejs") %>
