@@ -17,7 +17,7 @@
         <div class="col-start-3 col-span-2">
           <%- include("header.ejs") %> 
           <p class="py-4"> <a href="/" class="bg-green-600 text-white px-5 py-2 rounded font-medium mr-2 mb-2 border-gray-300" >Go Back To Home Page</a> </p>
-          <h6 class="py-4">Sign up As a New User</h6>
+          <h6 class="py-4">Sign up If You are New User</h6>
           <form action="/users" method="post">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
            <div class="py-3">
@@ -33,7 +33,7 @@
            <input type="email" name="email" class="border border-gray-400 text-gray-800 rounded p-2 w-full">
         </div>  
         <div class="py-3"> 
-           <label for="password">Type Password:</label>
+           <label for="password">Type Your Password:</label>
            <input type="password" name="password" class="border border-gray-400 text-gray-800 rounded p-2 w-full">
         </div>  
         <div class="py-3"> 
