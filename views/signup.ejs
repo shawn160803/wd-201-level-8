@@ -16,13 +16,13 @@
     <div class="grid grid-cols-6">
         <div class="col-start-3 col-span-2">
           <%- include("header.ejs") %> 
-          <p class="py-4"> <a href="/" class="bg-green-600 text-white px-5 py-2 rounded font-medium mr-2 mb-2 border-gray-300" >Go Back To Home Page</a> </p>
+          <p class="py-4"> <a href="/" class="bg-red-600 text-white px-5 py-2 rounded font-medium mr-2 mb-2 border-green-300" >Let's Go Back To Home Page</a> </p>
           <h6 class="py-4">Sign up If You are New User</h6>
           <form action="/users" method="post">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
            <div class="py-3">
            <label for="firstName">FIRST NAME:</label>
-           <input type="text" name="firstName" class="border border-gray-400 text-gray-800 rounded p-2 w-full">
+           <input type="text" name="firstName" class="border border-green-400 text-green-800 rounded p-2 w-full">
         </div>
         <div class="py-3">
            <label for="lastName">LAST NAME:</label>
@@ -37,7 +37,7 @@
            <input type="password" name="password" class="border border-gray-400 text-gray-800 rounded p-2 w-full">
         </div>  
         <div class="py-3"> 
-           <button type="submit" class="text-white bg-green-600 hover:bg-green-800 font-medium rounded px-5 py-2">Sign up Now</button>        
+           <button type="submit" class="text-white bg-red-600 hover:bg-blue-800 font-medium rounded px-5 py-2">Sign up Now</button>        
         </div>  
         </form>
         <% if(messages && messages.error && messages.error.length > 0)  { %>
