@@ -34,7 +34,7 @@ describe("Todo Application", function () {
     const csrfToken = extractCsrfToken(res);
     res = await agent.post("/users").send({
       firstName: "test",
-      lastName: "User 1st",
+      lastName: "User 1",
       email: "user@gmail.com",
       password: "123456",
       _csrf: csrfToken,
