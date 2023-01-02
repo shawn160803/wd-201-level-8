@@ -13,7 +13,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const LocalStrategy = require("passport-local");
 const bcrypt = require("bcrypt");
-
+//error 
 const saltRounds = 10;
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
