@@ -142,7 +142,7 @@ describe("Todo Application", function () {
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
-      title: "Buy milk",
+      title: "Buy wine",
       dueDate: new Date().toISOString(),
       completed: false,
       _csrf: csrfToken,
@@ -165,8 +165,7 @@ describe("Todo Application", function () {
     });
     const parsedDeleteResponse = JSON.parse(deleteResponse.text).success;
     expect(parsedDeleteResponse).toBe(true);
-    //testing for response-false
-    //as above id is deleted it does not exist
+    
     res = await agent.get("/todos");
     csrfToken = extractCsrfToken(res);
 
