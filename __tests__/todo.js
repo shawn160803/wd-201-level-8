@@ -1,7 +1,9 @@
 const request = require("supertest");
 var cheerio = require("cheerio");
+
 const db = require("../models/index");
 const app = require("../app");
+
 let server, agent;
 function extractCsrfToken(res) {
   var $ = cheerio.load(res.text);
@@ -20,7 +22,7 @@ const login = async (agent, username, password) => {
 describe("Todo Application", function () {
   beforeAll(async () => {
     await db.sequelize.sync({ force: true });
-    server = app.listen(process.env.PORT || 3000, () => {});
+    server = app.listen(6000, () => {});
     agent = request.agent(server);
   });
   afterAll(async () => {
@@ -28,21 +30,19 @@ describe("Todo Application", function () {
     server.close();
   });
 
-  
   test("Sign up", async () => {
     let res = await agent.get("/signup");
     const csrfToken = extractCsrfToken(res);
     res = await agent.post("/users").send({
-      firstName: "Test",
-      lastName: "User A",
-      email: "user.a@test.com",
-      password: "1234567",
+      firstName: "test",
+      lastName: "User 1",
+      email: "user@gmail.com",
+      password: "123456",
       _csrf: csrfToken,
     });
     expect(res.statusCode).toBe(302);
   });
 
-  
   test("Sign out", async () => {
     let res = await agent.get("/todos");
     expect(res.statusCode).toBe(200);
@@ -53,11 +53,11 @@ describe("Todo Application", function () {
   });
   test("Creates a new todo ", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "1234567");
+    await login(agent, "user@gmail.com", "123456");
     const res = await agent.get("/todos");
     const csrfToken = extractCsrfToken(res);
     const response = await agent.post("/todos").send({
-      title: "Buy a bicycle",
+      title: "Buy a boat",
       dueDate: new Date().toISOString(),
       completed: false,
       _csrf: csrfToken,
@@ -65,20 +65,17 @@ describe("Todo Application", function () {
     expect(response.statusCode).toBe(302);
   });
 
-  
   test("Marking todo as complete", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "1234567");
+    await login(agent, "user@gmail.com", "123456");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
-      title: "Buy soda",
+      title: "Buy milk",
       dueDate: new Date().toISOString(),
       completed: false,
       _csrf: csrfToken,
     });
-    
-    
     const groupedTodoResponse = await agent
       .get("/todos")
       .set("Accept", "application/json");
@@ -89,7 +86,6 @@ describe("Todo Application", function () {
     res = await agent.get("/todos");
     csrfToken = extractCsrfToken(res);
 
-    
     const response = await agent.put(`/todos/${latestTodo.id}`).send({
       _csrf: csrfToken,
       completed: status,
@@ -98,14 +94,13 @@ describe("Todo Application", function () {
     expect(parsedUpdateResponse.completed).toBe(true);
   });
 
-  
   test("Marking todo as incomplete", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "1234567");
+    await login(agent, "user@gmail.com", "123456");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
-      title: "Buy Notebook",
+      title: "Buy pen",
       dueDate: new Date().toISOString(),
       completed: false,
       _csrf: csrfToken,
@@ -119,7 +114,6 @@ describe("Todo Application", function () {
     res = await agent.get("/todos");
     csrfToken = extractCsrfToken(res);
 
-    
     var response = await agent.put(`/todos/${latestTodo.id}`).send({
       _csrf: csrfToken,
       completed: true,
@@ -145,11 +139,11 @@ describe("Todo Application", function () {
 
   test("Delete a todo with ID", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "1234567");
+    await login(agent, "user@gmail.com", "123456");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
-      title: "Buy a Shirt",
+      title: "Buy a Tie",
       dueDate: new Date().toISOString(),
       completed: false,
       _csrf: csrfToken,
@@ -171,3 +165,5 @@ describe("Todo Application", function () {
     expect(parsedDeleteResponse.success).toBe(true);
   });
 });
+
+    
