@@ -52,7 +52,7 @@
       <div class="col-start-3 col-span-2">
         <%- include('header.ejs') %>
         <p class="text-xl flex items-center">WELCOME *_* <%= userName %></p>
-        <a href="/signout" class="text-green-700" >Signout</a>
+        <a href="/signout" class="text-blue-700" >Signout</a>
         <form action="/todos" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
           <div class="flex gap-2 py-4">
