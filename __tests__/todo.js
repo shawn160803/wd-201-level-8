@@ -20,7 +20,7 @@ const login = async (agent, username, password) => {
 describe("Todo Application", function () {
   beforeAll(async () => {
     await db.sequelize.sync({ force: true });
-    server = app.listen(6000, () => {});
+    server = app.listen(process.env.PORT || 3000, () => {});
     agent = request.agent(server);
   });
   afterAll(async () => {
@@ -36,7 +36,7 @@ describe("Todo Application", function () {
       firstName: "Test",
       lastName: "User A",
       email: "user.a@test.com",
-      password: "12345678",
+      password: "1234567",
       _csrf: csrfToken,
     });
     expect(res.statusCode).toBe(302);
@@ -53,7 +53,7 @@ describe("Todo Application", function () {
   });
   test("Creates a new todo ", async () => {
     const agent = request.agent(server);
-    await login(agent, "user@gmail.com", "123456");
+    await login(agent, "user.a@test.com", "1234567");
     const res = await agent.get("/todos");
     const csrfToken = extractCsrfToken(res);
     const response = await agent.post("/todos").send({
@@ -68,7 +68,7 @@ describe("Todo Application", function () {
   
   test("Marking todo as complete", async () => {
     const agent = request.agent(server);
-    await login(agent, "user@gmail.com", "123456");
+    await login(agent, "user.a@test.com", "1234567");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
@@ -101,7 +101,7 @@ describe("Todo Application", function () {
   
   test("Marking todo as incomplete", async () => {
     const agent = request.agent(server);
-    await login(agent, "user@gmail.com", "123456");
+    await login(agent, "user.a@test.com", "1234567");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
@@ -145,7 +145,7 @@ describe("Todo Application", function () {
 
   test("Delete a todo with ID", async () => {
     const agent = request.agent(server);
-    await login(agent, "user@gmail.com", "123456");
+    await login(agent, "user.a@test.com", "1234567");
     let res = await agent.get("/todos");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
